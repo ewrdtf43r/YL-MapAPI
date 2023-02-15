@@ -19,13 +19,13 @@ def get_maps(coords1, coords2, spn1, spn2, l="map"):
 
 def move(direct, coords1, coords2, spn1, spn2):
     if direct == "right":
-        coords1 = str(float(coords1) + float(spn2))
+        coords1 = str(float(coords1) + float(spn1))
     elif direct == "left":
-        coords1 = str(float(coords1) - float(spn2))
+        coords1 = str(float(coords1) - float(spn1))
     elif direct == "down":
-        coords2 = str(float(coords2) - float(spn1))
+        coords2 = str(float(coords2) - float(spn2))
     else:
-        coords2 = str(float(coords2) + float(spn1))
+        coords2 = str(float(coords2) + float(spn2))
     return coords1, coords2
 
 pygame.init()
@@ -52,11 +52,13 @@ while running:
             if event.key == 1073741899 and scale <= 0.1:
                 scale += 0.01
                 scale = round(scale, 3)
-                image = get_maps(coords1, coords2, str(float(spn1) + scale), str(float(spn2) + scale))
+                spn1, spn2 = str(float(spn1) + scale), str(float(spn2) + scale)
+                image = get_maps(coords1, coords2, spn1, spn2)
             elif event.key == 1073741902 and scale - 0.01 + float(spn1) >= 0 and scale - 0.01 + float(spn2) >= 0:
                 scale -= 0.01
                 scale = round(scale, 3)
-                image = get_maps(coords1, coords2, str(float(spn1) + scale), str(float(spn2) + scale))
+                spn1, spn2 = str(float(spn1) + scale), str(float(spn2) + scale)
+                image = get_maps(coords1, coords2, spn1, spn2)
             elif event.key == pygame.K_UP:
                 coords1, coords2 = move("up", coords1, coords2, spn1, spn2)
                 image = get_maps(coords1, coords2, spn1, spn2)
